@@ -61,6 +61,49 @@ void carveMaze(int x, int y)
         }
     }
 }
+
+void copyMaze(char src[HEIGHT][WIDTH], char dest[HEIGHT][WIDTH])
+{
+    for (int i = 0; i < HEIGHT; i++)
+        for (int j = 0; j < WIDTH; j++)
+            dest[i][j] = src[i][j];
+}
+void drawCell(int x, int y)
+{
+    int left = y * CELL_SIZE + 50;
+    int top = x * CELL_SIZE + 50;
+
+    if (maze[x][y] == '#')
+        setfillstyle(SOLID_FILL, DARKGRAY);
+    else if (maze[x][y] == 'S')
+        setfillstyle(SOLID_FILL, GREEN);
+    else if (maze[x][y] == 'E')
+        setfillstyle(SOLID_FILL, RED);
+    else
+        setfillstyle(SOLID_FILL, BLACK);
+
+    bar(left, top, left + CELL_SIZE, top + CELL_SIZE);
+}
+
+void drawMaze()
+{
+    cleardevice();
+    for (int i = 0; i < HEIGHT; i++)
+        for (int j = 0; j < WIDTH; j++)
+            drawCell(i, j);
+}
+
+void drawPlayer(int oldX, int oldY, int newX, int newY, int color)
+{
+    drawCell(oldX, oldY);
+
+    int px = newY * CELL_SIZE + 50;
+    int py = newX * CELL_SIZE + 50;
+
+    setfillstyle(SOLID_FILL, color);
+    bar(px + 6, py + 6, px + CELL_SIZE - 6, py + CELL_SIZE - 6);
+}
+
 int main()
 {
     int screenW = getmaxwidth();
@@ -101,6 +144,10 @@ int main()
 
             drawMaze();
             getch();
+        }
+         else if (ch == '2')
+        {
+            playTurn(playerX, playerY, CYAN);
         }
     }
 }
