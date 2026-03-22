@@ -104,6 +104,52 @@ void drawPlayer(int oldX, int oldY, int newX, int newY, int color)
     bar(px + 6, py + 6, px + CELL_SIZE - 6, py + CELL_SIZE - 6);
 }
 
+
+void drawStep(int x, int y, int color)
+{
+    int px = y * CELL_SIZE + 50;
+    int py = x * CELL_SIZE + 50;
+
+    setfillstyle(SOLID_FILL, color);
+    bar(px + 6, py + 6, px + CELL_SIZE - 6, py + CELL_SIZE - 6);
+}
+
+int solveMaze(int x, int y)
+{
+    if (x < 0 || x >= HEIGHT || y < 0 || y >= WIDTH)
+        return 0;
+
+    if (maze[x][y] == '#' || maze[x][y] == '.')
+        return 0;
+
+    if (x == endX && y == endY)
+        return 1;
+
+    if (!(x == playerX && y == playerY))
+        maze[x][y] = '.';
+
+    drawStep(x, y, YELLOW);
+    delay(15);
+
+    for (int i = 0; i < 4; i++)
+    {
+        int nx = x + solveDirX[i];
+        int ny = y + solveDirY[i];
+
+        if (solveMaze(nx, ny))
+        {
+            drawStep(x, y, GREEN);
+            return 1;
+        }
+    }
+
+    drawStep(x, y, LIGHTRED);
+    delay(10);
+
+    maze[x][y] = ' ';
+    return 0;
+}
+
 int main()
 {
     int screenW = getmaxwidth();
