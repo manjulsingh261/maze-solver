@@ -149,6 +149,40 @@ int solveMaze(int x, int y)
     maze[x][y] = ' ';
     return 0;
 }
+int playTurn(int startX, int startY, int color)
+{
+    int px = startX;
+    int py = startY;
+    int moves = 0;
+
+    char backup[HEIGHT][WIDTH];
+
+    drawMaze();
+    drawPlayer(px, py, px, py, color);
+
+    while (true)
+    {
+        int oldX = px, oldY = py;
+        int nx = px, ny = py;
+
+        char move = getch();
+
+        if (move == 'h' || move == 'H')
+        {
+            copyMaze(maze, backup);
+
+            drawMaze();
+            solveMaze(px, py);
+            drawPlayer(px, py, px, py, color);
+
+            getch();
+
+            copyMaze(backup, maze);
+            drawMaze();
+            drawPlayer(px, py, px, py, color);
+            continue;
+       
+}
 
 int main()
 {
