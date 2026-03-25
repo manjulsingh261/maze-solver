@@ -181,7 +181,28 @@ int playTurn(int startX, int startY, int color)
             drawMaze();
             drawPlayer(px, py, px, py, color);
             continue;
-       
+        }
+        if (move == 'w' || move == 'W') nx--;
+        if (move == 's' || move == 'S') nx++;
+        if (move == 'a' || move == 'A') ny--;
+        if (move == 'd' || move == 'D') ny++;
+
+        if (nx >= 0 && nx < HEIGHT && ny >= 0 && ny < WIDTH && maze[nx][ny] != '#')
+        {
+            px = nx;
+            py = ny;
+            moves++;
+            drawPlayer(oldX, oldY, px, py, color);
+        }
+
+        char buffer[100];
+        sprintf(buffer, "Moves: %d  (Press H for hint)", moves);
+        outtextxy(50, HEIGHT * CELL_SIZE + 70, buffer);
+
+        if (px == endX && py == endY)
+            return moves;
+    
+}
 }
 
 int main()
