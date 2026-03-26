@@ -205,6 +205,37 @@ int playTurn(int startX, int startY, int color)
 }
 }
 
+void playMazeTwo()
+{
+    cleardevice();
+    outtextxy(50, 50, "Player 1 Turn");
+    getch();
+
+    p1Score = playTurn(playerX, playerY, CYAN);
+
+    cleardevice();
+    outtextxy(50, 50, "Player 2 Turn");
+    getch();
+
+    p2Score = playTurn(playerX, playerY, MAGENTA);
+
+    cleardevice();
+
+    char buffer[200];
+    sprintf(buffer, "P1: %d   P2: %d", p1Score, p2Score);
+    outtextxy(50, 100, buffer);
+
+    if (p1Score < p2Score)
+        outtextxy(50, 150, "Player 1 Wins!");
+    else if (p2Score < p1Score)
+        outtextxy(50, 150, "Player 2 Wins!");
+    else
+        outtextxy(50, 150, "Draw!");
+
+    getch();
+}
+
+
 int main()
 {
     int screenW = getmaxwidth();
